@@ -113,18 +113,34 @@
   }
 
   .text-glow {
-    text-shadow: 0 0 20px hsl(195 100% 47% / 0.5);
+    text-shadow: 0 0 20px hsl(175 60% 38% / 0.5);
+  }
+
+  .text-glow-gold {
+    text-shadow: 0 0 20px hsl(42 75% 50% / 0.4);
   }
 
   .border-glow {
-    border-color: hsl(195 100% 47% / 0.3);
+    border-color: hsl(175 60% 38% / 0.3);
   }
 
   .bg-grid-pattern {
     background-image: 
-      linear-gradient(hsl(195 100% 47% / 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, hsl(195 100% 47% / 0.03) 1px, transparent 1px);
+      linear-gradient(hsl(175 60% 38% / 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(175 60% 38% / 0.03) 1px, transparent 1px);
     background-size: 60px 60px;
+  }
+
+  .shadow-gold {
+    box-shadow: var(--shadow-gold);
+  }
+
+  .gradient-olive {
+    background: var(--gradient-olive);
+  }
+
+  .gradient-command {
+    background: var(--gradient-command);
   }
 
   .backdrop-blur-nav {
