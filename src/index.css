@@ -190,10 +190,10 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(195 100% 47% / 0.3);
+  background: hsl(175 60% 38% / 0.3);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(195 100% 47% / 0.5);
+  background: hsl(175 60% 38% / 0.5);
 }
