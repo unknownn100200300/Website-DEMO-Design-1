@@ -56,8 +56,15 @@ export default {
           dark: "hsl(var(--navy-dark))",
         },
         steel: "hsl(var(--steel))",
-        neon: {
-          blue: "hsl(var(--neon-blue))",
+        olive: {
+          DEFAULT: "hsl(var(--olive))",
+          light: "hsl(var(--olive-light))",
+        },
+        tactical: {
+          teal: "hsl(var(--tactical-teal))",
+        },
+        command: {
+          gold: "hsl(var(--command-gold))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
