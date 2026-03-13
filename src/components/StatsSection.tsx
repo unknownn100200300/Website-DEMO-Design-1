@@ -1,14 +1,15 @@
 import { useRef, useEffect, useState } from "react";
 import { motion, useInView } from "framer-motion";
+import { Col, Row, Statistic, Typography } from "antd";
 
 const stats = [
-  { value: 25, suffix: "+", label: "Years Experience" },
-  { value: 50, suffix: "+", label: "Countries" },
-  { value: 500, suffix: "+", label: "Installations" },
-  { value: 1000, suffix: "+", label: "Simulators Delivered" },
+  { value: 26, suffix: "+", label: "Years of Expertise" },
+  { value: 1300, suffix: "+", label: "Installations" },
+  { value: 20, suffix: "+", label: "Marine & Offshore Simulators" },
+  { value: 30, suffix: "+", label: "Crane Simulators" },
 ];
 
-const AnimatedNumber = ({ value, suffix, inView }: { value: number; suffix: string; inView: boolean }) => {
+const AnimatedStatistic = ({ value, suffix, inView }: { value: number; suffix: string; inView: boolean }) => {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -29,9 +30,20 @@ const AnimatedNumber = ({ value, suffix, inView }: { value: number; suffix: stri
   }, [inView, value]);
 
   return (
-    <span className="font-display text-5xl md:text-6xl font-bold text-primary text-glow">
-      {count}{suffix}
-    </span>
+    <div className="text-center">
+      <Statistic
+        value={count}
+        suffix={suffix}
+        valueStyle={{
+          color: "hsl(var(--primary))",
+          textShadow: "0 0 20px hsl(var(--primary) / 0.5)",
+          fontFamily: "var(--font-display)",
+          fontWeight: 700,
+          fontSize: "3rem",
+          lineHeight: 1.1,
+        }}
+      />
+    </div>
   );
 };
 
@@ -43,22 +55,23 @@ const StatsSection = () => {
     <section className="py-24 relative">
       <div className="absolute inset-0 gradient-navy opacity-40" />
       <div className="container mx-auto px-4 relative z-10" ref={ref}>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <Row gutter={[24, 24]} justify="center">
           {stats.map((stat, i) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: i * 0.15, duration: 0.5 }}
-              className="text-center"
-            >
-              <AnimatedNumber value={stat.value} suffix={stat.suffix} inView={inView} />
-              <p className="mt-2 text-sm tracking-widest uppercase text-muted-foreground">
-                {stat.label}
-              </p>
-            </motion.div>
+            <Col key={stat.label} xs={12} md={6}>
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: i * 0.15, duration: 0.5 }}
+                className="text-center"
+              >
+                <AnimatedStatistic value={stat.value} suffix={stat.suffix} inView={inView} />
+                <Typography.Text className="mt-2 text-sm tracking-widest uppercase text-muted-foreground block">
+                  {stat.label}
+                </Typography.Text>
+              </motion.div>
+            </Col>
           ))}
-        </div>
+        </Row>
       </div>
     </section>
   );

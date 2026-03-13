@@ -1,13 +1,12 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { MapPin } from "lucide-react";
+import { Card, Col, Row, Tooltip, Typography } from "antd";
+import { EnvironmentOutlined } from "@ant-design/icons";
 
 const locations = [
   { name: "New Delhi, India", region: "Headquarters", x: "68%", y: "38%" },
-  { name: "Dubai, UAE", region: "Middle East", x: "58%", y: "40%" },
-  { name: "Singapore", region: "Southeast Asia", x: "74%", y: "55%" },
-  { name: "London, UK", region: "Europe", x: "47%", y: "25%" },
-  { name: "Houston, USA", region: "Americas", x: "22%", y: "38%" },
+  { name: "USA", region: "Office", x: "22%", y: "38%" },
+  { name: "Singapore", region: "Office", x: "74%", y: "55%" },
 ];
 
 const GlobalPresenceSection = () => {
@@ -24,16 +23,24 @@ const GlobalPresenceSection = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <p className="text-sm tracking-[0.3em] uppercase text-primary mb-3">Worldwide</p>
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground">
+          <Typography.Text className="text-sm tracking-[0.3em] uppercase text-primary mb-3 block">
+            Worldwide
+          </Typography.Text>
+          <Typography.Title level={2} className="font-display !text-foreground !mb-0 text-4xl md:text-5xl">
             Global Presence
-          </h2>
+          </Typography.Title>
         </motion.div>
 
         {/* Map */}
         <div className="relative max-w-5xl mx-auto aspect-[2/1] rounded-lg border border-border bg-card/30 overflow-hidden">
           {/* Simple world map outline using SVG */}
-          <svg viewBox="0 0 1000 500" className="w-full h-full opacity-20" fill="none" stroke="hsl(175 60% 38%)" strokeWidth="0.5">
+          <svg
+            viewBox="0 0 1000 500"
+            className="w-full h-full opacity-20"
+            fill="none"
+            stroke="hsl(var(--primary))"
+            strokeWidth="0.5"
+          >
             {/* Simplified continents */}
             <path d="M150,120 Q200,100 250,110 Q300,90 350,120 Q320,180 280,200 Q240,220 200,210 Q160,190 150,150 Z" />
             <path d="M120,220 Q160,200 200,220 Q230,280 210,340 Q180,380 150,360 Q120,320 110,280 Z" />
@@ -50,38 +57,65 @@ const GlobalPresenceSection = () => {
               initial={{ opacity: 0, scale: 0 }}
               animate={inView ? { opacity: 1, scale: 1 } : {}}
               transition={{ delay: 0.5 + i * 0.15, duration: 0.4, type: "spring" }}
-              className="absolute group"
+              className="absolute"
               style={{ left: loc.x, top: loc.y, transform: "translate(-50%, -50%)" }}
             >
-              <div className="relative">
-                <div className="w-3 h-3 rounded-full bg-primary animate-pulse-glow" />
-                <div className="absolute -inset-2 rounded-full border border-primary/30 animate-ping" style={{ animationDuration: "2s" }} />
-              </div>
-              <div className="absolute left-1/2 -translate-x-1/2 top-6 opacity-0 group-hover:opacity-100 transition-opacity bg-card border border-border rounded px-3 py-2 whitespace-nowrap z-10">
-                <p className="text-xs font-semibold text-foreground">{loc.name}</p>
-                <p className="text-xs text-primary">{loc.region}</p>
-              </div>
+              <Tooltip
+                title={
+                  <div>
+                    <div className="text-xs font-semibold">{loc.name}</div>
+                    <div className="text-xs" style={{ color: "hsl(var(--primary))" }}>
+                      {loc.region}
+                    </div>
+                  </div>
+                }
+              >
+                <div className="relative cursor-pointer">
+                  <div className="w-3 h-3 rounded-full bg-primary animate-pulse-glow" />
+                  <div
+                    className="absolute -inset-2 rounded-full border border-primary/30 animate-ping"
+                    style={{ animationDuration: "2s" }}
+                  />
+                </div>
+              </Tooltip>
             </motion.div>
           ))}
         </div>
 
         {/* Location cards below */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-8">
-          {locations.map((loc, i) => (
-            <motion.div
-              key={loc.name}
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.8 + i * 0.1, duration: 0.4 }}
-              className="flex items-center gap-2 p-3 rounded border border-border bg-card/30"
-            >
-              <MapPin className="w-4 h-4 text-primary flex-shrink-0" />
-              <div>
-                <p className="text-xs font-semibold text-foreground">{loc.name}</p>
-                <p className="text-xs text-muted-foreground">{loc.region}</p>
-              </div>
-            </motion.div>
-          ))}
+        <div className="mt-8">
+          <Row gutter={[16, 16]}>
+            {locations.map((loc, i) => (
+              <Col key={loc.name} xs={12} md={8} lg={5}>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ delay: 0.8 + i * 0.1, duration: 0.4 }}
+                >
+                  <Card
+                    size="small"
+                    style={{
+                      background: "hsl(var(--card) / 0.3)",
+                      borderColor: "hsl(var(--border))",
+                    }}
+                    styles={{ body: { padding: 12 } }}
+                  >
+                    <div className="flex items-center gap-2">
+                      <EnvironmentOutlined className="text-primary flex-shrink-0" />
+                      <div>
+                        <Typography.Text className="text-xs font-semibold text-foreground block">
+                          {loc.name}
+                        </Typography.Text>
+                        <Typography.Text className="text-xs text-muted-foreground">
+                          {loc.region}
+                        </Typography.Text>
+                      </div>
+                    </div>
+                  </Card>
+                </motion.div>
+              </Col>
+            ))}
+          </Row>
         </div>
       </div>
     </section>

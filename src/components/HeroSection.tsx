@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Button, Space, Typography } from "antd";
 import heroBg from "@/assets/hero-bg.jpg";
 
 const HeroSection = () => {
@@ -27,56 +28,72 @@ const HeroSection = () => {
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 text-center">
-        <motion.p
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
-          className="text-sm tracking-[0.3em] uppercase text-primary mb-6 font-medium"
+          className="mb-6"
         >
-          Applied Research International
-        </motion.p>
+          <Typography.Text className="text-sm tracking-[0.3em] uppercase text-primary font-medium">
+            Applied Research International (ARI)
+          </Typography.Text>
+        </motion.div>
 
-        <motion.h1
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.8 }}
-          className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-foreground mb-6 leading-tight"
+          className="mb-6"
         >
-          Next-Gen
-          <br />
-          <span className="text-primary text-glow">Simulation</span>
-          <br />
-          Systems
-        </motion.h1>
+          <Typography.Title
+            level={1}
+            className="font-display !text-foreground !mb-0 text-5xl md:text-7xl lg:text-8xl leading-tight"
+          >
+            Naval &amp; Marine
+            <br />
+            <span className="text-primary text-glow">Simulation</span>
+            <br />
+            &amp; VR Training
+          </Typography.Title>
+        </motion.div>
 
-        <motion.p
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7, duration: 0.6 }}
-          className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10"
+          className="max-w-2xl mx-auto mb-10"
         >
-          Global leader in sophisticated simulation & virtual reality training
-          solutions for marine, energy, defense and construction industries.
-        </motion.p>
+          <Typography.Paragraph className="text-lg md:text-xl text-muted-foreground !mb-0">
+            Applied Research International (ARI), the naval and marine simulation arm of Zen Technologies
+            Limited, is a global leader in the production of sophisticated simulation and virtual
+            reality training solutions for the defence, marine and offshore industries.
+          </Typography.Paragraph>
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.9, duration: 0.6 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center"
+          className="flex justify-center"
         >
-          <a
-            href="#solutions"
-            className="px-8 py-3 gradient-accent text-accent-foreground font-display font-semibold text-lg tracking-wider uppercase rounded shadow-neon hover:shadow-[0_0_30px_hsl(175_60%_38%/0.4)] transition-all duration-300"
-          >
-            Explore Solutions
-          </a>
-          <a
-            href="#contact"
-            className="px-8 py-3 border border-primary/30 text-foreground font-display font-semibold text-lg tracking-wider uppercase rounded hover:bg-primary/10 hover:border-primary/60 transition-all duration-300"
-          >
-            Contact Us
-          </a>
+          <Space size="middle" direction="horizontal" className="flex flex-col sm:flex-row">
+            <Button
+              size="large"
+              type="primary"
+              href="#solutions"
+              className="gradient-accent shadow-neon font-display font-semibold tracking-wider uppercase"
+            >
+              Explore Portfolio
+            </Button>
+            <Button
+              size="large"
+              href="#contact"
+              className="font-display font-semibold tracking-wider uppercase"
+              ghost
+            >
+              Contact Us
+            </Button>
+          </Space>
         </motion.div>
       </div>
 

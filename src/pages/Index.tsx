@@ -7,20 +7,23 @@ import GlobalPresenceSection from "@/components/GlobalPresenceSection";
 import ProductShowcase from "@/components/ProductShowcase";
 import StatsSection from "@/components/StatsSection";
 import FooterSection from "@/components/FooterSection";
+import { Layout } from "antd";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <Layout className="min-h-screen bg-background" style={{ background: "transparent" }}>
       <Navbar />
-      <HeroSection />
-      <SolutionsSection />
-      <IndustriesSection />
-      <TechnologySection />
-      <GlobalPresenceSection />
-      <ProductShowcase />
-      <StatsSection />
-      <FooterSection />
-    </div>
+      <Layout.Content className="pt-16">
+        <HeroSection />
+        <SolutionsSection />
+        <IndustriesSection />
+        <TechnologySection />
+        <GlobalPresenceSection />
+        <ProductShowcase />
+        <StatsSection />
+        <FooterSection />
+      </Layout.Content>
+    </Layout>
   );
 };
 

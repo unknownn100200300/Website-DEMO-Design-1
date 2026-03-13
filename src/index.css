@@ -158,23 +158,6 @@
   100% { transform: translateY(100vh); }
 }
 
-/* Ant Design dark theme overrides */
-.ant-layout {
-  background: transparent !important;
-}
-
-.ant-menu-dark {
-  background: transparent !important;
-}
-
-.ant-card {
-  background: transparent !important;
-}
-
-.ant-tabs-dark .ant-tabs-nav::before {
-  border-color: hsl(220 10% 16%) !important;
-}
-
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;

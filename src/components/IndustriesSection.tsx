@@ -1,13 +1,22 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Anchor, Droplets, Shield, Container, GraduationCap } from "lucide-react";
+import { Card, Col, Row, Typography } from "antd";
+import {
+  BookOutlined,
+  CloudOutlined,
+  CompassOutlined,
+  ContainerOutlined,
+  FireOutlined,
+  SafetyOutlined,
+} from "@ant-design/icons";
 
 const industries = [
-  { icon: Anchor, name: "Maritime", desc: "Ship navigation, port operations and marine training" },
-  { icon: Droplets, name: "Oil & Gas", desc: "Offshore drilling, well control and process training" },
-  { icon: Shield, name: "Defense", desc: "Naval combat, tactical systems and warfare training" },
-  { icon: Container, name: "Ports", desc: "Terminal operations, crane handling and logistics" },
-  { icon: GraduationCap, name: "Training Institutes", desc: "Academic simulation labs and certification programs" },
+  { icon: SafetyOutlined, name: "Defence", desc: "Mission rehearsal, tactical proving, and simulator-based force readiness." },
+  { icon: CompassOutlined, name: "Marine", desc: "Navigation, bridge operations, and marine training systems." },
+  { icon: FireOutlined, name: "Offshore", desc: "Offshore operations training with dynamic modeling and realistic scenarios." },
+  { icon: ContainerOutlined, name: "Ports & Terminals", desc: "Container handling, terminal operations, and logistics training." },
+  { icon: CloudOutlined, name: "Cloud & Digital", desc: "Cloud-based solutions supporting large-scale users and installations." },
+  { icon: BookOutlined, name: "Training & Assessment", desc: "Structured training delivery, assessment, and compliance-driven programs." },
 ];
 
 const IndustriesSection = () => {
@@ -24,33 +33,50 @@ const IndustriesSection = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <p className="text-sm tracking-[0.3em] uppercase text-primary mb-3">Sectors</p>
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground">
+          <Typography.Text className="text-sm tracking-[0.3em] uppercase text-primary mb-3 block">
+            Sectors
+          </Typography.Text>
+          <Typography.Title level={2} className="font-display !text-foreground !mb-0 text-4xl md:text-5xl">
             Industries We Serve
-          </h2>
+          </Typography.Title>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+        <Row gutter={[24, 24]} justify="center">
           {industries.map((ind, i) => {
             const Icon = ind.icon;
             return (
-              <motion.div
-                key={ind.name}
-                initial={{ opacity: 0, y: 30 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: i * 0.1, duration: 0.5 }}
-                whileHover={{ y: -6 }}
-                className="group flex flex-col items-center text-center p-6 rounded-lg border border-border bg-card/50 hover:border-primary/40 hover:shadow-neon transition-all duration-300"
-              >
-                <div className="w-16 h-16 rounded-lg flex items-center justify-center mb-4 bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                  <Icon className="w-8 h-8 text-primary group-hover:scale-110 transition-transform" />
-                </div>
-                <h3 className="font-display text-lg font-semibold text-foreground mb-2">{ind.name}</h3>
-                <p className="text-xs text-muted-foreground leading-relaxed">{ind.desc}</p>
-              </motion.div>
+              <Col key={ind.name} xs={12} md={8} lg={6}>
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ delay: i * 0.1, duration: 0.5 }}
+                  whileHover={{ y: -6 }}
+                  className="group"
+                >
+                  <Card
+                    hoverable
+                    style={{
+                      background: "hsl(var(--card) / 0.5)",
+                      borderColor: "hsl(var(--border))",
+                    }}
+                    className="text-center"
+                    styles={{ body: { padding: 20 } }}
+                  >
+                    <div className="w-16 h-16 rounded-lg flex items-center justify-center mx-auto mb-4 bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                      <Icon className="text-primary text-3xl group-hover:scale-110 transition-transform" />
+                    </div>
+                    <Typography.Title level={5} className="font-display !mb-2 text-foreground">
+                      {ind.name}
+                    </Typography.Title>
+                    <Typography.Paragraph className="text-xs text-muted-foreground leading-relaxed !mb-0">
+                      {ind.desc}
+                    </Typography.Paragraph>
+                  </Card>
+                </motion.div>
+              </Col>
             );
           })}
-        </div>
+        </Row>
       </div>
     </section>
   );

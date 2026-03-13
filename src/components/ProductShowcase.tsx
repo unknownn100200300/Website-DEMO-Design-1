@@ -1,25 +1,26 @@
-import { useState, useRef } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { LeftOutlined, RightOutlined } from "@ant-design/icons";
+import { Button, Carousel, Col, Row, Typography } from "antd";
+import { motion, useInView } from "framer-motion";
+import { useRef, useState } from "react";
 import marineSim from "@/assets/marine-sim.jpg";
+import navalDefense from "@/assets/naval-defense.jpg";
 import offshoreSim from "@/assets/offshore-sim.jpg";
-import trainingRoom from "@/assets/training-room.jpg";
 
 const slides = [
   {
+    image: navalDefense,
+    title: "Integrated Naval Simulation Complex",
+    desc: "A cutting-edge training environment integrating multiple high-fidelity simulators into a unified ecosystem for joint, mission-oriented exercises.",
+  },
+  {
     image: marineSim,
-    title: "Ship Bridge Simulators",
-    desc: "Full mission bridge simulators replicating real vessel operations with 360° visual systems and dynamic ship models.",
+    title: "Naval Bridge Operations Simulator",
+    desc: "Recreates the environment of a naval vessel bridge down to the last detail, enabling realistic ship, convoy, and fleet operations training.",
   },
   {
     image: offshoreSim,
-    title: "Offshore Drilling Simulators",
-    desc: "High-fidelity drilling and well control simulators for offshore operations training with real-time process modeling.",
-  },
-  {
-    image: trainingRoom,
-    title: "Training Control Rooms",
-    desc: "Centralized instructor stations enabling multi-exercise control, assessment and debriefing for complex training scenarios.",
+    title: "Radar / ARPA Simulator",
+    desc: "Built to comply with IMO performance standards and aligned with IMO Model Courses 1.07 and 1.08 for simulator-based training.",
   },
 ];
 
@@ -27,12 +28,10 @@ const ProductShowcase = () => {
   const [current, setCurrent] = useState(0);
   const ref = useRef(null);
   const inView = useInView(ref, { once: true });
-
-  const next = () => setCurrent((c) => (c + 1) % slides.length);
-  const prev = () => setCurrent((c) => (c - 1 + slides.length) % slides.length);
+  const carouselRef = useRef<any>(null);
 
   return (
-    <section className="py-24 relative">
+    <section id="products" className="py-24 relative">
       <div className="container mx-auto px-4 relative z-10" ref={ref}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -40,71 +39,70 @@ const ProductShowcase = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <p className="text-sm tracking-[0.3em] uppercase text-primary mb-3">Products</p>
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground">
+          <Typography.Text className="text-sm tracking-[0.3em] uppercase text-primary mb-3 block">
+            Featured Products
+          </Typography.Text>
+          <Typography.Title
+            level={2}
+            className="font-display !text-foreground !mb-0 text-4xl md:text-5xl"
+          >
             Product Showcase
-          </h2>
+          </Typography.Title>
         </motion.div>
 
         <div className="relative max-w-5xl mx-auto">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={current}
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
-              transition={{ duration: 0.4 }}
-              className="grid md:grid-cols-2 gap-8 items-center"
-            >
-              <div className="aspect-video rounded-lg overflow-hidden border border-border">
-                <img
-                  src={slides[current].image}
-                  alt={slides[current].title}
-                  className="w-full h-full object-cover"
-                />
+          <Carousel ref={carouselRef} afterChange={(idx) => setCurrent(idx)} dots draggable>
+            {slides.map((slide) => (
+              <div key={slide.title}>
+                <Row gutter={[24, 24]} align="middle">
+                  <Col xs={24} md={12}>
+                    <div className="aspect-video rounded-lg overflow-hidden border border-border">
+                      <img src={slide.image} alt={slide.title} className="w-full h-full object-cover" />
+                    </div>
+                  </Col>
+                  <Col xs={24} md={12}>
+                    <Typography.Title level={3} className="font-display !mb-4 text-foreground">
+                      {slide.title}
+                    </Typography.Title>
+                    <Typography.Paragraph className="text-muted-foreground leading-relaxed !mb-6">
+                      {slide.desc}
+                    </Typography.Paragraph>
+                    <Button
+                      type="primary"
+                      href="#contact"
+                      className="gradient-accent shadow-neon font-display font-semibold tracking-wider uppercase"
+                    >
+                      Learn More
+                    </Button>
+                  </Col>
+                </Row>
               </div>
-              <div>
-                <h3 className="font-display text-3xl font-bold text-foreground mb-4">
-                  {slides[current].title}
-                </h3>
-                <p className="text-muted-foreground leading-relaxed mb-6">
-                  {slides[current].desc}
-                </p>
-                <a
-                  href="#contact"
-                  className="inline-block px-6 py-2.5 gradient-accent text-accent-foreground font-display font-semibold tracking-wider uppercase rounded shadow-neon hover:shadow-[0_0_30px_hsl(175_60%_38%/0.4)] transition-all text-sm"
-                >
-                  Learn More
-                </a>
-              </div>
-            </motion.div>
-          </AnimatePresence>
+            ))}
+          </Carousel>
 
-          {/* Navigation */}
           <div className="flex items-center justify-center gap-4 mt-8">
-            <button
-              onClick={prev}
-              className="w-10 h-10 rounded border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/40 transition-colors"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
+            <Button
+              onClick={() => carouselRef.current?.prev?.()}
+              icon={<LeftOutlined />}
+              aria-label="Previous slide"
+            />
             <div className="flex gap-2">
               {slides.map((_, i) => (
                 <button
                   key={i}
-                  onClick={() => setCurrent(i)}
+                  onClick={() => carouselRef.current?.goTo?.(i)}
                   className={`w-2 h-2 rounded-full transition-all ${
                     i === current ? "bg-primary w-6" : "bg-muted-foreground/30"
                   }`}
+                  aria-label={`Go to slide ${i + 1}`}
                 />
               ))}
             </div>
-            <button
-              onClick={next}
-              className="w-10 h-10 rounded border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/40 transition-colors"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
+            <Button
+              onClick={() => carouselRef.current?.next?.()}
+              icon={<RightOutlined />}
+              aria-label="Next slide"
+            />
           </div>
         </div>
       </div>
